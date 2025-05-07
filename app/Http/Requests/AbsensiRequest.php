@@ -41,6 +41,8 @@ class AbsensiRequest extends FormRequest
 
     protected function prepareForValidation()
     {
+      dd($this->all());
+
       $this->merge([
         'tanggal' => Carbon::parse($this->tanggal)->format('Y-m-d')
       ]);
