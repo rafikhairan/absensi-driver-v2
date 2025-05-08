@@ -1,7 +1,7 @@
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import InputError from '@/components/input-error';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { FormEventHandler, useState } from 'react';
@@ -12,7 +12,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { cn } from '@/lib/utils';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, Check, Terminal } from 'lucide-react';
 import { format } from 'date-fns';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -31,7 +31,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
 import { DateRange } from 'react-day-picker';
+import { SharedData } from '@/types';
 
 type AbsensiForm = {
   nama: string;
@@ -54,6 +60,7 @@ type AbsensiForm = {
 }
 
 export default function Welcome() {
+  const { flash } = usePage<SharedData>().props
   const { data, setData, post, processing, errors, reset } = useForm<AbsensiForm>()
 
   const [checked, setChecked] = useState<boolean>(false)
@@ -80,7 +87,7 @@ export default function Welcome() {
               </div>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline">Rekap</Button>
+                  <Button variant="outline">Laporan</Button>
                 </DialogTrigger>
                 <DialogContent
                   className="sm:max-w-[425px]"
@@ -129,13 +136,13 @@ export default function Welcome() {
                   </Popover>
                   <DialogFooter>
                     <Button
-                        onClick={() => {
-                            const url = date?.from && date?.to
-                                ? `/rekap?tanggal[from]=${format(date.from, "yyyy-MM-dd")}&tanggal[to]=${format(date.to, "yyyy-MM-dd")}`
-                                : `/rekap`
+                      onClick={() => {
+                        const url = date?.from && date?.to
+                          ? `/rekap?tanggal[from]=${format(date.from, "yyyy-MM-dd")}&tanggal[to]=${format(date.to, "yyyy-MM-dd")}`
+                          : `/rekap`
 
-                            window.open(url, "_blank")
-                        }}
+                        window.open(url, "_blank")
+                      }}
                     >
                       Download
                     </Button>
@@ -143,6 +150,15 @@ export default function Welcome() {
                 </DialogContent>
               </Dialog>
             </div>
+            {flash.success && (
+              <Alert variant="green" className="mb-8">
+                <Check className="h-4 w-4" />
+                <AlertTitle>Absen Berhasil!</AlertTitle>
+                <AlertDescription>
+                  {flash.success}
+                </AlertDescription>
+              </Alert>
+            )}
 
             <div className="grid lg:grid-cols-2 gap-6">
               <div className="grid gap-2">
@@ -177,9 +193,9 @@ export default function Welcome() {
                     <SelectValue placeholder="Pilih nama" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
-                    <SelectItem value="system">System</SelectItem>
+                    {["Cipto", "Kus", "Manto", "Feby", "Bambang"].map((nama) => (
+                      <SelectItem value={nama}>{nama}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <InputError message={errors.nama} />

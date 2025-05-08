@@ -1,92 +1,108 @@
-@use(App\Models\Evidence)
+@use(Carbon\Carbon)
 
 @extends('pdf.layout')
 
 @push('styles')
-    <style>
-        .container {
-            width: 100%;
-            overflow: hidden;
-        }
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
 
-        h1 {
-            font-weight: bold;
-            font-size: 1.125rem; /* text-lg */
-            margin-bottom: 1.25rem; /* mb-5 */
-        }
+    .header {
+      margin-bottom: 20px;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            border: 1px solid black;
-        }
+    .header h1 {
+      font-weight: bold;
+      font-size: 18px;
+    }
 
-        thead {
-            background-color: #DBEAFE; /* bg-blue-100 */
-        }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
 
-        th, td {
-            border: 1px solid #E5E7EB; /* border-gray-200 */
-            padding: 0.375rem 0.5rem; /* px-2 py-1.5 (1.5 = 6px) */
-        }
-
-        th {
-            text-align: center;
-            font-weight: 600;
-        }
-
-        td.text-center {
-            text-align: center;
-        }
-
-        td.text-left {
-            text-align: left;
-        }
-
-        td.text-right {
-            text-align: right;
-        }
-
-        td.px-4 {
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-
-        td.py-2 {
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-        }
-    </style>
+    th, td {
+      border: 1px solid #000;
+      padding: 3px;
+      text-align: center;
+    }
+  </style>
 @endpush
 
 @section('content')
-    <div class="container">
-        <h1>Rekap Absensi</h1>
-        <table>
-            <thead>
-            <tr>
-                <th>Tanggal</th>
-                <th>Nama</th>
-                <th>Jam Mulai</th>
-                <th>Jam Selesai</th>
-                <th>KM Awal</th>
-                <th>KM Akhir</th>
-                <th>Uraian Perjalanan</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($data as $row)
-                <tr>
-                    <td class="text-center px-4 py-2">{{ $row->tanggal }}</td>
-                    <td class="text-center px-4 py-2">{{ $row->nama }}</td>
-                    <td class="text-center px-4 py-2">{{ $row->jam_mulai }}</td>
-                    <td class="text-center px-4 py-2">{{ $row->jam_selesai }}</td>
-                    <td class="text-center px-4 py-2">{{ $row->km_awal }}</td>
-                    <td class="text-center px-4 py-2">{{ $row->km_akhir }}</td>
-                    <td class="text-center px-4 py-2">{{ $row->uraian_perjalanan }}</td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-    </div>
+  <div class="header">
+    <h1>Laporan Absensi</h1>
+    @if($tanggal)
+      <p>{{ $tanggal['from'] }} - {{ $tanggal['to'] }}</p>
+    @endif
+  </div>
+  <table>
+    <thead>
+    <tr>
+      <th>Tanggal</th>
+      <th>Nama</th>
+      <th>Jam Mulai</th>
+      <th>Jam Selesai</th>
+      <th>KM Awal</th>
+      <th>KM Akhir</th>
+      <th>Uraian Perjalanan</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($data as $row)
+      <tr>
+        <td class="text-center px-4 py-2">{{ Carbon::parse($row->tanggal)->format('d/m/Y') }}</td>
+        <td class="text-center px-4 py-2">{{ $row->nama }}</td>
+        <td class="text-center px-4 py-2">{{ Carbon::parse($row->jam_mulai)->format('H:i') }}</td>
+        <td class="text-center px-4 py-2">{{ Carbon::parse($row->jam_selesai)->format('H:i') }}</td>
+        <td class="text-center px-4 py-2">{{ $row->km_awal }}</td>
+        <td class="text-center px-4 py-2">{{ $row->km_akhir }}</td>
+        <td class="text-center px-4 py-2">{{ $row->uraian_perjalanan }}</td>
+      </tr>
+    @endforeach
+    </tbody>
+  </table>
+
+  <div style="page-break-after: always;"></div>
+  <div class="header">
+    <h1>Lampiran Foto</h1>
+  </div>
+
+  <div style="text-align: center;">
+    @foreach($data as $i => $row)
+      <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
+        <img src="{{ public_path('storage/' . $row->bukti_bensin) }}" alt="Bukti Bensin"
+             style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
+        <p style="font-size: 12px; margin-top: 5px;">
+          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->nama }}_Bensin
+        </p>
+      </div>
+      <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
+        <img src="{{ public_path('storage/' . $row->bukti_tol) }}" alt="Bukti Tol"
+             style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
+        <p style="font-size: 12px; margin-top: 5px;">
+          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->nama }}_Tol
+        </p>
+      </div>
+      <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
+        <img src="{{ public_path('storage/' . $row->bukti_parkir) }}" alt="Bukti Parkir"
+             style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
+        <p style="font-size: 12px; margin-top: 5px;">
+          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->nama }}_Parkir
+        </p>
+      </div>
+      <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
+        <img src="{{ public_path('storage/' . $row->bukti_lain_lain) }}" alt="Bukti Tol"
+             style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
+        <p style="font-size: 12px; margin-top: 5px;">
+          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->nama }}_Lain-lain
+        </p>
+      </div>
+      <div style="clear: both;"></div>
+    @endforeach
+    <div style="clear: both;"></div>
+  </div>
 @endsection

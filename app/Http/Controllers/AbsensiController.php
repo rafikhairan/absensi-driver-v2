@@ -23,7 +23,7 @@ class AbsensiController extends Controller
   {
     Absensi::create($request->validated());
 
-    return redirect()->route('absensi.index');
+    return redirect()->route('absensi.index')->with('success', 'Data kehadiranmu telah tercatat. Terima kasih sudah absen hari ini 🎉');
   }
 
   public function rekap(Request $request): Response
@@ -42,6 +42,7 @@ class AbsensiController extends Controller
 
     return Pdf::loadView('pdf.rekap-absensi', [
       'title' => 'Rekap Absensi',
+      'tanggal' => $tanggal,
       'data' => $absensi
     ])
       ->setPaper('a4', 'landscape')

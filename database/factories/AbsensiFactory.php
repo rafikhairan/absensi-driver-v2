@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\Testing\File;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Absensi>
@@ -26,21 +27,21 @@ class AbsensiFactory extends Factory
             'jam_selesai' => fake()->time('H:i'),
             'km_awal' => $kmAwal,
             'km_akhir' => $kmAkhir,
-            'uraian_perjalanan' => fake()->paragraph(),
+            'uraian_perjalanan' => fake()->word(),
 
             'km_bensin' => fake()->optional()->numberBetween(0, 100),
             'liter' => fake()->optional()->numberBetween(1, 20),
             'biaya_bensin' => fake()->optional()->numberBetween(10000, 200000),
-            'bukti_bensin' => fake()->optional()->imageUrl(),
+            'bukti_bensin' => File::fake()->image('test.jpg'),
 
             'biaya_tol' => fake()->optional()->numberBetween(5000, 100000),
-            'bukti_tol' => fake()->optional()->imageUrl(),
+            'bukti_tol' => File::fake()->image('test.jpg'),
 
             'biaya_parkir' => fake()->optional()->numberBetween(2000, 50000),
-            'bukti_parkir' => fake()->optional()->imageUrl(),
+            'bukti_parkir' => File::fake()->image('test.jpg'),
 
             'biaya_lain_lain' => fake()->optional()->numberBetween(1000, 100000),
-            'bukti_lain_lain' => fake()->optional()->imageUrl(),
+            'bukti_lain_lain' => File::fake()->image('test.jpg')
         ];
     }
 }
