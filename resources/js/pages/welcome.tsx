@@ -128,16 +128,16 @@ export default function Welcome() {
                     </PopoverContent>
                   </Popover>
                   <DialogFooter>
-                    <Button asChild>
-                      <Link
-                        href={
-                          date?.from && date?.to
-                            ? `/rekap?tanggal[from]=${format(date.from, "yyyy-MM-dd")}&tanggal[to]=${format(date.to, "yyyy-MM-dd")}`
-                            : `/rekap`
-                        }
-                      >
-                        Download
-                      </Link>
+                    <Button
+                        onClick={() => {
+                            const url = date?.from && date?.to
+                                ? `/rekap?tanggal[from]=${format(date.from, "yyyy-MM-dd")}&tanggal[to]=${format(date.to, "yyyy-MM-dd")}`
+                                : `/rekap`
+
+                            window.open(url, "_blank")
+                        }}
+                    >
+                      Download
                     </Button>
                   </DialogFooter>
                 </DialogContent>
@@ -197,7 +197,7 @@ export default function Welcome() {
                 <InputError message={errors.jam_mulai} />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="jam_selesai">Jam Mulai</Label>
+                <Label htmlFor="jam_selesai">Jam Selesai</Label>
                 <Input
                   id="jam_selesai"
                   type="time"
