@@ -29,6 +29,7 @@ class AbsensiController extends Controller
   public function rekap(Request $request): Response
   {
     $tanggal = $request->query('tanggal');
+    $nama = $request->query('nama');
 
     $absensi = Absensi::when($tanggal, function (Builder $query) use ($tanggal) {
       if (!empty($tanggal['from']) && !empty($tanggal['to'])) {
@@ -38,7 +39,10 @@ class AbsensiController extends Controller
       } elseif (!empty($tanggal['to'])) {
         $query->where('tanggal', '<=', $tanggal['to']);
       }
-    })->get();
+    })->when($nama, function (Builder $query) use ($nama) {
+      $query->where('nama', $nama);
+    })
+      ->get();
 
     return Pdf::loadView('pdf.rekap-absensi', [
       'title' => 'Rekap Absensi',

@@ -21,7 +21,7 @@ class AbsensiFactory extends Factory
         $kmAkhir = $kmAwal + fake()->numberBetween(10, 100);
 
         return [
-            'nama' => fake()->name,
+            'nama' => fake()->randomElement(["Cipto", "Kus", "Manto", "Feby", "Bambang"]),
             'tanggal' => fake()->date(),
             'jam_mulai' => fake()->time('H:i'),
             'jam_selesai' => fake()->time('H:i'),
