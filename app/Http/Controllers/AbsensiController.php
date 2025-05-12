@@ -29,7 +29,7 @@ class AbsensiController extends Controller
   public function rekap(Request $request): Response
   {
     $tanggal = $request->query('tanggal');
-    $nama = $request->query('nama');
+    $shift = $request->query('shift');
 
     $absensi = Absensi::when($tanggal, function (Builder $query) use ($tanggal) {
       if (!empty($tanggal['from']) && !empty($tanggal['to'])) {
@@ -39,8 +39,8 @@ class AbsensiController extends Controller
       } elseif (!empty($tanggal['to'])) {
         $query->where('tanggal', '<=', $tanggal['to']);
       }
-    })->when($nama, function (Builder $query) use ($nama) {
-      $query->where('nama', $nama);
+    })->when($shift, function (Builder $query) use ($shift) {
+      $query->where('shift', $shift);
     })
       ->get();
 

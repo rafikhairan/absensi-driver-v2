@@ -15,7 +15,8 @@ class AbsensiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama' => ['required', 'string', 'max:255'],
+            'shift' => ['required', 'string', 'max:255'],
+            'driver_pengganti' => ['nullable', 'string', 'max:255'],
             'tanggal' => ['required', 'date', 'date_format:Y-m-d'],
             'jam_mulai' => ['required', 'date_format:H:i'],
             'jam_selesai' => ['required', 'date_format:H:i'],

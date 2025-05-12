@@ -20,7 +20,7 @@ import { DateRange } from 'react-day-picker';
 
 export default function LaporanDialog() {
   const [date, setDate] = useState<DateRange | undefined>()
-  const [nama, setNama] = useState<string | undefined>()
+  const [shift, setShift] = useState<string | undefined>()
 
   const handleClick = () => {
     const params = new URLSearchParams()
@@ -30,8 +30,8 @@ export default function LaporanDialog() {
       params.append("tanggal[to]", format(date.to, "yyyy-MM-dd"))
     }
 
-    if (nama) {
-      params.append("nama", nama)
+    if (shift) {
+      params.append("shift", shift)
     }
 
     const url = `/rekap${params.toString() ? `?${params.toString()}` : ''}`
@@ -51,18 +51,18 @@ export default function LaporanDialog() {
         <DialogHeader>
           <DialogTitle>Rekap Absensi</DialogTitle>
           <DialogDescription>
-            Filter berdasarkan tanggal dan/atau nama (opsional).
+            Filter berdasarkan tanggal dan/atau shift (opsional).
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-2">
-          <Label htmlFor="nama">Nama</Label>
-          <Select defaultValue={nama} onValueChange={(value) => setNama(value)}>
+          <Label htmlFor="shift">Shift</Label>
+          <Select defaultValue={shift} onValueChange={(value) => setShift(value)}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Pilih nama" />
+              <SelectValue placeholder="Pilih shift" />
             </SelectTrigger>
             <SelectContent>
-              {["Cipto", "Kus", "Manto", "Feby", "Bambang"].map((nama) => (
-                <SelectItem value={nama}>{nama}</SelectItem>
+              {["Cipto", "Kus", "Manto", "Feby", "Bambang"].map((shift) => (
+                <SelectItem value={shift}>{shift}</SelectItem>
               ))}
             </SelectContent>
           </Select>

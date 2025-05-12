@@ -17,7 +17,8 @@ import { SharedData } from '@/types';
 import { FormEventHandler, useState } from 'react';
 
 type AbsensiForm = {
-  nama: string;
+  shift: string;
+  driver_pengganti?: string;
   tanggal: string;
   jam_mulai: string;
   jam_selesai: string;
@@ -40,7 +41,8 @@ export default function AbsensiForm() {
   const { flash } = usePage<SharedData>().props
   const { data, setData, post, processing, errors, reset } = useForm<AbsensiForm>()
 
-  const [checked, setChecked] = useState<boolean>(false)
+  const [biayaChecked, setBiayaChecked] = useState<boolean>(false)
+  const [driverChecked, setDriverChecked] = useState<boolean>(false)
 
   const submit: FormEventHandler = (e) => {
     e.preventDefault()
@@ -97,18 +99,43 @@ export default function AbsensiForm() {
             <InputError message={errors.tanggal} />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="nama">Nama</Label>
-            <Select defaultValue={data.nama} onValueChange={(value) => setData("nama", value)}>
+            <Label htmlFor="shift">Shift</Label>
+            <Select defaultValue={data.shift} onValueChange={(value) => setData("shift", value)}>
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Pilih nama" />
+                <SelectValue placeholder="Pilih shift" />
               </SelectTrigger>
               <SelectContent>
-                {["Cipto", "Kus", "Manto", "Feby", "Bambang"].map((nama) => (
-                  <SelectItem value={nama}>{nama}</SelectItem>
+                {["Cipto", "Kus", "Manto", "Feby", "Bambang"].map((shift) => (
+                  <SelectItem value={shift}>{shift}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            <InputError message={errors.nama} />
+            <InputError message={errors.shift} />
+          </div>
+          <div className="col-span-full grid lg:grid-cols-2 items-center gap-6">
+            <div className="flex items-center space-x-2">
+              <Checkbox id="tambahan" checked={driverChecked} onCheckedChange={() => setDriverChecked(!driverChecked)} />
+              <Label
+                htmlFor="tambahan"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Anda driver pengganti?
+              </Label>
+            </div>
+            {driverChecked && (
+              <div className="grid gap-2">
+                <Label htmlFor="driver_pengganti">Nama Driver Pengganti</Label>
+                <Input
+                  id="driver_pengganti"
+                  type="text"
+                  required
+                  value={data.driver_pengganti}
+                  onChange={(e) => setData("driver_pengganti", e.target.value)}
+                  placeholder="Input nama driver pengganti"
+                />
+                <InputError message={errors.driver_pengganti} />
+              </div>
+            )}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="jam_mulai">Jam Mulai</Label>
@@ -170,7 +197,7 @@ export default function AbsensiForm() {
             <InputError message={errors.uraian_perjalanan} />
           </div>
           <div className="flex items-center space-x-2">
-            <Checkbox id="tambahan" checked={checked} onCheckedChange={() => setChecked(!checked)} />
+            <Checkbox id="tambahan" checked={biayaChecked} onCheckedChange={() => setBiayaChecked(!biayaChecked)} />
             <Label
               htmlFor="tambahan"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -178,7 +205,7 @@ export default function AbsensiForm() {
               Ada biaya tambahan?
             </Label>
           </div>
-          {checked && (
+          {biayaChecked && (
             <>
               <div className="col-span-full grid grid-cols-3 gap-6">
                 <div className="grid gap-2">

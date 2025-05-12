@@ -47,7 +47,8 @@
     <thead>
     <tr>
       <th rowspan="2">Tanggal</th>
-      <th rowspan="2">Nama</th>
+      <th rowspan="2">Shift</th>
+      <th rowspan="2">Driver</th>
       <th rowspan="2">Jam</th>
       <th colspan="3">Perjalanan</th>
       <th colspan="3">Bensin</th>
@@ -68,7 +69,8 @@
     @foreach($data as $row)
       <tr>
         <td>{{ Carbon::parse($row->tanggal)->format('d/m/Y') }}</td>
-        <td>{{ $row->nama }}</td>
+        <td>{{ $row->shift }}</td>
+        <td>{{ $row->driver_pengganti ?? $row->shift }}</td>
         <td>{{ Carbon::parse($row->jam_mulai)->format('H:i') }} - {{ Carbon::parse($row->jam_selesai)->format('H:i') }}</td>
         <td>{{ $row->km_awal }}</td>
         <td>{{ $row->uraian_perjalanan }}</td>
@@ -103,7 +105,7 @@
       @php
         $total = $data->sum('biaya_bensin') + $data->sum('biaya_tol') + $data->sum('biaya_parkir') + $data->sum('biaya_lain_lain');
       @endphp
-      <td colspan="8" style="text-align: center;"><strong>Jumlah</strong></td>
+      <td colspan="9" style="text-align: center;"><strong>Jumlah</strong></td>
       <td colspan="4"><strong>@rupiah($total)</strong></td>
     </tr>
     </tfoot>
@@ -120,28 +122,28 @@
         <img src="{{ public_path('storage/' . $row->bukti_bensin) }}" alt="Bukti Bensin"
              style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
         <p style="font-size: 12px; margin-top: 5px;">
-          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->nama }}_{{ $row->km_awal }}_Bensin
+          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_{{ $row->km_awal }}_Bensin
         </p>
       </div>
       <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
         <img src="{{ public_path('storage/' . $row->bukti_tol) }}" alt="Bukti Tol"
              style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
         <p style="font-size: 12px; margin-top: 5px;">
-          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->nama }}_Tol
+          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_Tol
         </p>
       </div>
       <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
         <img src="{{ public_path('storage/' . $row->bukti_parkir) }}" alt="Bukti Parkir"
              style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
         <p style="font-size: 12px; margin-top: 5px;">
-          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->nama }}_Parkir
+          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_Parkir
         </p>
       </div>
       <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
         <img src="{{ public_path('storage/' . $row->bukti_lain_lain) }}" alt="Bukti Tol"
              style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
         <p style="font-size: 12px; margin-top: 5px;">
-          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->nama }}_Lain-lain
+          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_Lain-lain
         </p>
       </div>
       <div style="clear: both;"></div>

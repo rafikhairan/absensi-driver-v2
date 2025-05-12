@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('absensi', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->string('nama');
+            $table->string('shift');
+            $table->string('driver_pengganti')->nullable();
             $table->time('jam_mulai');
             $table->time('jam_selesai');
             $table->integer('km_awal');

@@ -13,7 +13,8 @@ class Absensi extends Model
   protected $table = 'absensi';
   protected $fillable = [
     'tanggal',
-    'nama',
+    'shift',
+    'driver_pengganti',
     'jam_mulai',
     'jam_selesai',
     'km_awal',

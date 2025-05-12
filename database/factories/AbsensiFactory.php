@@ -20,8 +20,11 @@ class AbsensiFactory extends Factory
         $kmAwal = fake()->numberBetween(10000, 20000);
         $kmAkhir = $kmAwal + fake()->numberBetween(10, 100);
 
+        $isDriverPengganti = fake()->boolean();
+
         return [
-            'nama' => fake()->randomElement(["Cipto", "Kus", "Manto", "Feby", "Bambang"]),
+            'shift' => fake()->randomElement(["Cipto", "Kus", "Manto", "Feby", "Bambang"]),
+            'driver_pengganti' => $isDriverPengganti ? fake()->name() : null,
             'tanggal' => fake()->date(),
             'jam_mulai' => fake()->time('H:i'),
             'jam_selesai' => fake()->time('H:i'),
