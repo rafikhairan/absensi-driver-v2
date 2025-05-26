@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Http\Testing\File;
 
@@ -25,7 +26,7 @@ class AbsensiFactory extends Factory
         return [
             'shift' => fake()->randomElement(["Cipto", "Kus", "Manto", "Feby", "Bambang"]),
             'driver_pengganti' => $isDriverPengganti ? fake()->name() : null,
-            'tanggal' => fake()->date(),
+            'tanggal' => Carbon::now()->startOfMonth()->addDays(fake()->numberBetween(0, Carbon::now()->daysInMonth - 1))->format('Y-m-d'),
             'jam_mulai' => fake()->time('H:i'),
             'jam_selesai' => fake()->time('H:i'),
             'km_awal' => $kmAwal,

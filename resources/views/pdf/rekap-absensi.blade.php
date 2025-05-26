@@ -42,12 +42,17 @@
     @if($tanggal)
       <p>{{ $tanggal['from'] }} - {{ $tanggal['to'] }}</p>
     @endif
+    @if($shift)
+      <p>{{ $shift }}</p>
+    @endif
   </div>
   <table>
     <thead>
     <tr>
       <th rowspan="2">Tanggal</th>
-      <th rowspan="2">Shift</th>
+      @if(!$shift)
+        <th rowspan="2">Shift</th>
+      @endif
       <th rowspan="2">Driver</th>
       <th rowspan="2">Jam</th>
       <th colspan="3">Perjalanan</th>
@@ -69,7 +74,9 @@
     @foreach($data as $row)
       <tr>
         <td>{{ Carbon::parse($row->tanggal)->format('d/m/Y') }}</td>
-        <td>{{ $row->shift }}</td>
+        @if(!$shift)
+          <td>{{ $row->shift }}</td>
+        @endif
         <td>{{ $row->driver_pengganti ?? $row->shift }}</td>
         <td>{{ Carbon::parse($row->jam_mulai)->format('H:i') }} - {{ Carbon::parse($row->jam_selesai)->format('H:i') }}</td>
         <td>{{ $row->km_awal }}</td>
@@ -105,7 +112,7 @@
       @php
         $total = $data->sum('biaya_bensin') + $data->sum('biaya_tol') + $data->sum('biaya_parkir') + $data->sum('biaya_lain_lain');
       @endphp
-      <td colspan="9" style="text-align: center;"><strong>Jumlah</strong></td>
+      <td colspan="{{ !$shift ? '9' : '8' }}" style="text-align: center;"><strong>Jumlah</strong></td>
       <td colspan="4"><strong>@rupiah($total)</strong></td>
     </tr>
     </tfoot>

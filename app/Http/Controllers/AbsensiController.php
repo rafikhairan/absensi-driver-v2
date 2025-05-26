@@ -42,12 +42,14 @@ class AbsensiController extends Controller
     })->when($shift, function (Builder $query) use ($shift) {
       $query->where('shift', $shift);
     })
+      ->orderBy('tanggal', 'asc')
       ->get();
 
     return Pdf::loadView('pdf.rekap-absensi', [
       'title' => 'Rekap Absensi',
       'tanggal' => $tanggal,
-      'data' => $absensi
+      'data' => $absensi,
+      'shift' => $shift
     ])
       ->setPaper('a4', 'landscape')
       ->download('Rekap Absensi.pdf');
