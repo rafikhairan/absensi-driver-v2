@@ -114,9 +114,9 @@ export default function AbsensiForm() {
           </div>
           <div className="col-span-full grid lg:grid-cols-2 items-center gap-6">
             <div className="flex items-center space-x-2">
-              <Checkbox id="tambahan" checked={driverChecked} onCheckedChange={() => setDriverChecked(!driverChecked)} />
+              <Checkbox id="driver-pengganti" checked={driverChecked} onCheckedChange={() => setDriverChecked(!driverChecked)} />
               <Label
-                htmlFor="tambahan"
+                htmlFor="driver-pengganti"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 Anda driver pengganti?

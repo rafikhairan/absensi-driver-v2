@@ -126,28 +126,28 @@
   <div style="text-align: center;">
     @foreach($data as $i => $row)
       <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
-        <img src="{{ public_path('storage/' . $row->bukti_bensin) }}" alt="Bukti Bensin"
+        <img src="{{ storage_path('app/public/' . $row->bukti_bensin) }}" alt="Bukti Bensin"
              style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
         <p style="font-size: 12px; margin-top: 5px;">
           {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_{{ $row->km_awal }}_Bensin
         </p>
       </div>
       <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
-        <img src="{{ public_path('storage/' . $row->bukti_tol) }}" alt="Bukti Tol"
+        <img src="{{ storage_path('app/public/' . $row->bukti_tol) }}" alt="Bukti Tol"
              style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
         <p style="font-size: 12px; margin-top: 5px;">
           {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_Tol
         </p>
       </div>
       <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
-        <img src="{{ public_path('storage/' . $row->bukti_parkir) }}" alt="Bukti Parkir"
+        <img src="{{ storage_path('app/public/' . $row->bukti_parkir) }}" alt="Bukti Parkir"
              style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
         <p style="font-size: 12px; margin-top: 5px;">
           {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_Parkir
         </p>
       </div>
       <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
-        <img src="{{ public_path('storage/' . $row->bukti_lain_lain) }}" alt="Bukti Tol"
+        <img src="{{ storage_path('app/public/' . $row->bukti_lain_lain) }}" alt="Bukti Tol"
              style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
         <p style="font-size: 12px; margin-top: 5px;">
           {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_Lain-lain
