@@ -105,7 +105,7 @@ export default function AbsensiForm() {
                 <SelectValue placeholder="Pilih shift" />
               </SelectTrigger>
               <SelectContent>
-                {["Cipto", "Kus", "Manto", "Feby", "Bambang"].map((shift) => (
+                {["Cipto", "Kus", "Manto", "Vebbry", "Budiono"].map((shift) => (
                   <SelectItem value={shift}>{shift}</SelectItem>
                 ))}
               </SelectContent>

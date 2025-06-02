@@ -24,7 +24,7 @@ class AbsensiFactory extends Factory
         $isDriverPengganti = fake()->boolean();
 
         return [
-            'shift' => fake()->randomElement(["Cipto", "Kus", "Manto", "Feby", "Bambang"]),
+            'shift' => fake()->randomElement(["Cipto", "Kus", "Manto", "Vebbry", "Budiono"]),
             'driver_pengganti' => $isDriverPengganti ? fake()->name() : null,
             'tanggal' => Carbon::now()->startOfMonth()->addDays(fake()->numberBetween(0, Carbon::now()->daysInMonth - 1))->format('Y-m-d'),
             'jam_mulai' => fake()->time('H:i'),
