@@ -125,34 +125,46 @@
 
   <div style="text-align: center;">
     @foreach($data as $i => $row)
-      <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
-        <img src="{{ storage_path('app/public/' . $row->bukti_bensin) }}" alt="Bukti Bensin"
-             style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
-        <p style="font-size: 12px; margin-top: 5px;">
-          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_{{ $row->km_awal }}_Bensin
-        </p>
-      </div>
-      <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
-        <img src="{{ storage_path('app/public/' . $row->bukti_tol) }}" alt="Bukti Tol"
-             style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
-        <p style="font-size: 12px; margin-top: 5px;">
-          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_Tol
-        </p>
-      </div>
-      <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
-        <img src="{{ storage_path('app/public/' . $row->bukti_parkir) }}" alt="Bukti Parkir"
-             style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
-        <p style="font-size: 12px; margin-top: 5px;">
-          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_Parkir
-        </p>
-      </div>
-      <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
-        <img src="{{ storage_path('app/public/' . $row->bukti_lain_lain) }}" alt="Bukti Tol"
-             style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
-        <p style="font-size: 12px; margin-top: 5px;">
-          {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_Lain-lain
-        </p>
-      </div>
+      @if($row->bukti_bensin)
+        <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
+          <img src="{{ storage_path('app/public/' . $row->bukti_bensin) }}" alt="Bukti Bensin"
+               style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
+          <p style="font-size: 12px; margin-top: 5px;">
+            {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_{{ $row->km_awal }}_Bensin
+          </p>
+        </div>
+      @endif
+
+      @if($row->bukti_tol)
+        <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
+          <img src="{{ storage_path('app/public/' . $row->bukti_tol) }}" alt="Bukti Tol"
+               style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
+          <p style="font-size: 12px; margin-top: 5px;">
+            {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_Tol
+          </p>
+        </div>
+      @endif
+
+      @if($row->bukti_parkir)
+        <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
+          <img src="{{ storage_path('app/public/' . $row->bukti_parkir) }}" alt="Bukti Parkir"
+               style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
+          <p style="font-size: 12px; margin-top: 5px;">
+            {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_Parkir
+          </p>
+        </div>
+      @endif
+
+      @if($row->bukti_lain_lain)
+        <div style="width: 24%; float: left; margin: 0.5%; text-align: center;">
+          <img src="{{ storage_path('app/public/' . $row->bukti_lain_lain) }}" alt="Bukti Lain-lain"
+               style="width: 100%; height: auto; max-height: 300px; object-fit: contain;">
+          <p style="font-size: 12px; margin-top: 5px;">
+            {{ Carbon::parse($row->tanggal)->format('d/m/Y') }}_{{ $row->shift }}_Lain-lain
+          </p>
+        </div>
+      @endif
+
       <div style="clear: both;"></div>
     @endforeach
     <div style="clear: both;"></div>
